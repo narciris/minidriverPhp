@@ -1,0 +1,15 @@
+{
+    "name": "nar/minidriver-php",
+    "autoload": {
+        "psr-4": {
+            "Nar\\MinidriverPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "narciris",
+            "email": "narciris.mena@udea.edu.co"
+        }
+    ],
+    "require": {}
+}
