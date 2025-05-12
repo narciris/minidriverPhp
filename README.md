@@ -4,38 +4,9 @@
 
 ## 🎯 Objetivo
 
-Desarrollar una aplicación web en PHP puro que funcione como una versión básica de Google Drive. El sistema debe permitir a los usuarios autenticados subir, gestionar y visualizar archivos dentro de carpetas. Además, se debe permitir elegir entre almacenamiento local o en la nube (Amazon S3) al momento de subir los archivos.
+En esta rama de desarrollará la configuracion del entorno de desarrollo con docker
 
 ---
-
-## 📚 Requerimientos funcionales
-
-1. **Autenticación de usuarios**
-   - Registro y login.
-   - Cada usuario debe tener una preferencia de almacenamiento: `local` o `s3`.
-   - Auth Google
-
-2. **Gestión de archivos**
-   - Subir archivos (PDF, Excel, imágenes, ZIP, etc.).
-   - Listar archivos con filtros por tipo o fecha.
-   - Descargar archivos.
-   - Eliminar archivos.
-   - Visualizar archivos por carpetas.
-
-3. **Gestión de carpetas**
-   - Crear, renombrar y eliminar carpetas.
-   - Navegación jerárquica (subcarpetas).
-
-4. **Historial de acciones**
-   - Registrar acciones como subida, descarga y eliminación por parte de los usuarios.
-
-5. **Opción de almacenamiento**
-   - Al subir un archivo, el usuario elige entre:
-     - **Local** (almacenado en el servidor).
-     - **AWS S3** (almacenado en la nube).
-
----
-
 ## ⚙️ Requerimientos técnicos
 
 - Lenguaje: **PHP puro**
@@ -52,25 +23,34 @@ Desarrollar una aplicación web en PHP puro que funcione como una versión bási
 
 ---
 
+### Creacion de imagen de docker
 
+El Dockerfile es un archivo de texto que contiene una serie de instrucciones 
+para construir una imagen de Docker.
+Aquí tienes un ejemplo de un Dockerfile para una aplicación PHP con Apache:
 
-## 📤 Restricciones
+### creacion archivo docker compose.yml
 
-- Solo usuarios autenticados pueden gestionar archivos y carpetas.
-- Validar tipo y tamaño de archivo antes de subir.
-- Permitir cambiar preferencia de almacenamiento desde la configuración del usuario.
-- Mostrar al usuario en qué almacenamiento se encuentra cada archivo.
-
----
-
-## 🧪 Extras opcionales
-
-- Vista previa de imágenes o PDFs.
-- Búsqueda y paginación de archivos.
-- Exportar historial a CSV.
-- Notificaciones simples (ej. subida exitosa).
-- Barra de progreso al subir archivos.
-
----
+Docker Compose es una herramienta 
+que permite definir y ejecutar aplicaciones Docker de múltiples contenedores
 
 Projecto By Narciris Mena M , Estudiante Ing Sistemas - Desarrolladora Web
+
+### Despliegue de la Aplicación PHP
+
+Para desplegar la aplicación, simplemente ejecuta el siguiente comando 
+en el directorio donde se encuentran tus archivos Dockerfile y docker-compose.yml:
+
+``` docker-compose up -d ```
+Este comando descargará las imágenes necesarias, construirá la imagen personalizada 
+de PHP y Apache, y lanzará los contenedores definidos en docker-compose.yml.
+
+### Verificación y Pruebas
+Una vez que los contenedores estén en funcionamiento, abre tu navegador
+web y navega a http://localhost. 
+Deberías ver la página de inicio de tu aplicación PHP.
+
+### Tecnologías implementadas
+Docker: Dos contenedores principales:
+PHP 8.2 con Apache
+MySQL 8 (configurable para PostgreSQL)

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html
+      - ./uploads:/var/www/html/uploads
+    env_file:
+      - ./.env
+    environment:
+      - AWS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_DEFAULT_REGION=
+      - DB_HOST=db
+      - DB_NAME=${MYSQL_DATABASE}
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+volumes:
+  db_data:
