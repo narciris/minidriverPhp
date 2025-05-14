@@ -2,3 +2,7 @@
 
 #.env
 .env
+#idea
+.idea
+#composer lock
+composer.lock

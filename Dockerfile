@@ -24,6 +24,13 @@ WORKDIR /var/www/html/
 # Copiar composer.json primero para aprovechar la caché de Docker
 COPY composer.json composer.lock* ./
 
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip
+
+
 # Instalar dependencias con Composer (incluido AWS SDK)
 RUN composer install --no-scripts --no-autoloader
 
