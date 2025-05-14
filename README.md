@@ -2,55 +2,80 @@
 
 # 🗂️ MiniDrive – Sistema de Gestión de Archivos PHP MVC
 
-## 🎯 Objetivo
 
-En esta rama de desarrollará la configuracion del entorno de desarrollo con docker
+# MiniDrive API – Proyecto en PHP Puro
 
----
-## ⚙️ Requerimientos técnicos
+Este proyecto es una **API básica en PHP puro** que simula el funcionamiento de un mini sistema de almacenamiento tipo "drive", como Google Drive o Dropbox, pero de manera sencilla y controlada.
 
-- Lenguaje: **PHP puro**
-- Arquitectura: **MVC + POO**
-- Acceso a base de datos con **PDO**
-- Base de datos: **MySQL** o **PostgreSQL**
-- Contenerización con **Docker**:
-  - Contenedor para PHP + Apache
-  - Contenedor para la base de datos
-  - Volumen para persistencia de archivos locales
-- Uso de **volúmenes Docker** para archivos y datos persistentes.
-- Manejo de dependencias con **Composer**.
-- Integración con **AWS SDK para PHP** para subir archivos a Amazon S3.
+Está diseñado para aprender y demostrar cómo construir una API RESTful sin el uso de frameworks como Laravel o Symfony, apoyándose únicamente en las funcionalidades nativas de PHP y herramientas estándar como Composer.
 
 ---
 
-### Creacion de imagen de docker
+## 🧱 Estructura del Proyecto
 
-El Dockerfile es un archivo de texto que contiene una serie de instrucciones 
-para construir una imagen de Docker.
-Aquí tienes un ejemplo de un Dockerfile para una aplicación PHP con Apache:
+La estructura base del proyecto está organizada para mantener el código limpio y modular:
 
-### creacion archivo docker compose.yml
+```
+minidrive-php/
+├── public/             # Punto de entrada para las peticiones HTTP (index.php)
+├── src/                # Código fuente de la aplicación (controladores, servicios, etc.)
+├── routes/             # Definición de rutas de la API
+├── vendor/             # Librerías instaladas con Composer
+├── composer.json       # Archivo de configuración de Composer
+└── README.md           # Este documento
+```
 
-Docker Compose es una herramienta 
-que permite definir y ejecutar aplicaciones Docker de múltiples contenedores
+---
 
-Projecto By Narciris Mena M , Estudiante Ing Sistemas - Desarrolladora Web
+## 🚦 Enrutador Personalizado
 
-### Despliegue de la Aplicación PHP
+Se implementó un **sistema de enrutamiento manual en PHP puro**, sin utilizar frameworks externos. Este enrutador intercepta todas las peticiones entrantes y las redirige a las rutas correspondientes de la API, haciendo uso de los parámetros de la URL.
 
-Para desplegar la aplicación, simplemente ejecuta el siguiente comando 
-en el directorio donde se encuentran tus archivos Dockerfile y docker-compose.yml:
+El archivo `index.php`  sirve como punto de entrada para todas las peticiones, y el sistema de rutas es capaz de procesar cualquier URL que coincida con las definiciones, facilitando la expansión de nuevas funcionalidades sin perder la simplicidad del código.
 
-``` docker-compose up -d ```
-Este comando descargará las imágenes necesarias, construirá la imagen personalizada 
-de PHP y Apache, y lanzará los contenedores definidos en docker-compose.yml.
+---
 
-### Verificación y Pruebas
-Una vez que los contenedores estén en funcionamiento, abre tu navegador
-web y navega a http://localhost. 
-Deberías ver la página de inicio de tu aplicación PHP.
+## ⚙️ Autoloading con Composer
 
-### Tecnologías implementadas
-Docker: Dos contenedores principales:
-PHP 8.2 con Apache
-MySQL 8 (configurable para PostgreSQL)
+Para mejorar la gestión de dependencias y la carga automática de clases, se utilizó **Composer con su función de autoload**. Esto permitió organizar el código de manera más eficiente, de forma que cada clase se cargue automáticamente sin necesidad de incluir manualmente los archivos con `require`.
+
+El autoloading es configurado en el archivo `composer.json` con el siguiente bloque:
+
+```json
+"autoload": {
+    "psr-4": {
+        "App\": "src/"
+    }
+}
+```
+
+Esto permite una estructura de clases y nombres de espacios que hace que el código sea más limpio y escalable.
+
+---
+
+## 📝 Rutas Definidas
+
+En la rama de este proyecto se configuraron y definieron las siguientes rutas para simular el funcionamiento básico de un servicio de almacenamiento:
+
+
+---
+
+## 📦 Dependencias
+
+Este proyecto depende de las siguientes librerías que fueron instaladas mediante Composer:
+
+- **aws/aws-sdk-php**: Para la interacción con el servicio de almacenamiento S3 de AWS, en caso de necesitar manejar archivos de manera persistente en la nube.
+
+Puedes instalar las dependencias ejecutando el siguiente comando:
+
+```
+composer install
+```
+
+Esto levantará el servidor en `http://localhost:8000`, donde podrás probar las rutas de la API.
+
+---
+
+## 📄 Conclusión
+
+Este proyecto busca demostrar cómo construir una API RESTful simple en PHP puro, utilizando Composer para la gestión de dependencias y el autoloading de clases. Con esta base, se puede expandir el proyecto para manejar más funcionalidades o incluso integrar almacenamiento en la nube como AWS S3 para la gestión de archivos reales.
