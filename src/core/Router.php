@@ -12,13 +12,14 @@ class Router
         $url = $this->parseUrl();
 
         if (isset($url[0]) && file_exists(CONTROLLERS_PATH . ucfirst($url[0]) . 'Controller.php')) {
-            $this->controller = ucfirst($url[0]) . 'Controller';
-            require_once CONTROLLERS_PATH . $this->controller . '.php';
-            unset($url[0]);
+            $controllerName = ucfirst($url[0]) . 'Controller';
         } else {
-            $this->controller = 'HomeController';
-            require_once CONTROLLERS_PATH . $this->controller . '.php';
+            $controllerName = 'HomeController';
         }
+
+        $controllerClass = 'Nar\\MinidriverPhp\\app\\controllers\\' . $controllerName;
+        $this->controller = new $controllerClass();
+
 
         $this->controller = new $this->controller();
 
