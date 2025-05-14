@@ -2,6 +2,8 @@
 
 namespace Nar\MinidriverPhp\core;
 use Dotenv;
+use PDO;
+use PDOException;
 
 class Connexion
 {
@@ -21,15 +23,15 @@ class Connexion
             $dbname = $_ENV['MYSQL_DATABASE'];
             $user = $_ENV['MYSQL_USER'];
             $pass = $_ENV['MYSQL_PASSWORD'];
-            $host = $_ENV['MYSQL_HOST'];
+            $host = $_ENV['MYSQL_ROOT_PASSWORD'];
             $charset = 'utf8';
 
             $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
             try {
-                self::$pdo = new \Nar\MinidriverPhp\app\core\PDO($dsn, $user, $pass);
-                self::$pdo->setAttribute(\Nar\MinidriverPhp\app\core\PDO::ATTR_ERRMODE, \Nar\MinidriverPhp\app\core\PDO::ERRMODE_EXCEPTION);
-            } catch (\Nar\MinidriverPhp\app\core\PDOException $e) {
+                self::$pdo = new PDO($dsn, $user, $pass);
+                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
                 die("Error de conexión: " . $e->getMessage());
             }
         }

@@ -3,48 +3,54 @@
 namespace Nar\MinidriverPhp\core;
 class BaseController
 {
-    protected $model;
-    protected $viewPath;
 
-    /**
-     * Constructor del controlador base
-     * @param object $model Modelo asociado al controlador
-     * @param string $viewPath Ruta a las vistas
-     */
-    public function __construct($model = null, $viewPath = 'views/') {
-        $this->model = $model;
-        $this->viewPath = $viewPath;
-    }
 
-    /**
-     * Renderizar una vista
-     * @param string $view Nombre de la vista
-     * @param array $data Datos para pasar a la vista
-     * @return void
-     */
-    protected function render($view, $data = []) {
-        // Convertimos el array asociativo en variables
-        extract($data);
-
-        // Incluimos la vista
-        $viewFile = $this->viewPath . $view . '.php';
-
-        if (file_exists($viewFile)) {
-            require_once $viewFile;
-        } else {
-            die("Vista no encontrada: {$viewFile}");
+    protected $models;
+    public function loadModel($model)
+    {
+        $modelFile = 'models/' . $model . '.php';
+        if(file_exists($modelFile)){
+            require_once $modelFile;
+            $modelClass = new $model();
+            return $modelClass;
+        }else{
+            die("el modelo . $model no existe");
         }
     }
 
-    /**
-     * Redireccionar a otra URL
-     * @param string $url URL de destino
-     * @return void
-     */
-    protected function redirect($url) {
-        header("Location: {$url}");
-        exit;
+    public function jsonError($message, $status = 400)
+    {
+        $this->jsonResponse([
+            'status' => 'error',
+            'status_code' => $status,
+            'message' => 'error al realizar la operacion',
+            "error" => $message
+        ], $status);
     }
 
+    public function jsonResponse($data, $status = 200){
+        header('Content-Type: application/json');
+        http_response_code($status);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+        exit();
+
+    }
+
+    public function jsonSuccess($data, $status = 200)
+    {
+        $this->jsonResponse([
+            'status' => 'success',
+            'status_code' => $status,
+            'message' => 'Operacion realizada con exito',
+            'data' => $data,
+
+        ], $status);
+    }
+
+    public function render($location)
+    {
+        header('Location: ' . $location);
+        exit;
+    }
 
 }
