@@ -1,0 +1,23 @@
+POST http://localhost:8000/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "ALberto Gon",
+  "email": "albert@example.com",
+  "password": "189875623"
+}
+
+### ver todos los usuarios
+
+
+GET http://localhost:8000/user/index
+Accept: application/json
+Content-Type: application/json
+
+
+### logearse con google
+
+POST http://localhost:8000/auth/oauth
+Accept: application/json
+Content-Type: application/json

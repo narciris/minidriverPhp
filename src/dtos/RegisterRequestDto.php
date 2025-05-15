@@ -9,12 +9,39 @@ class RegisterRequestDto
 
     private $password;
     private $name;
+    private $googleId;
+    private $picture;
 
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
 
-    function __construct($email, $password, $name){
-        $this->email = $email;
-        $this->name = $name;
-        $this->password = password_hash($password, PASSWORD_DEFAULT); ;
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId): void
+    {
+        $this->googleId = $googleId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture): void
+    {
+        $this->picture = $picture;
     }
 
 
@@ -43,7 +70,7 @@ class RegisterRequestDto
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT); ;
     }
 
     /**
@@ -67,7 +94,9 @@ class RegisterRequestDto
         return [
             'password' => $this->password,
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'google_id' => $this->googleId,
+            'picture' => $this->picture
         ];
     }
 

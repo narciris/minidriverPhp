@@ -17,13 +17,13 @@ class Connexion
     public static function getConnexion()
     {
         if (!self::$pdo) {
-            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
             $dotenv->load();
 
             $dbname = $_ENV['MYSQL_DATABASE'];
             $user = $_ENV['MYSQL_USER'];
             $pass = $_ENV['MYSQL_PASSWORD'];
-            $host = $_ENV['MYSQL_ROOT_PASSWORD'];
+            $host = $_ENV['DB_HOST'];
             $charset = 'utf8';
 
             $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
