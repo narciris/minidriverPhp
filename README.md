@@ -1,81 +1,52 @@
-# minidriverPhp
+# Registro de Cambios - Rama de Desarrollo
 
-# 🗂️ MiniDrive – Sistema de Gestión de Archivos PHP MVC
+**Fecha:** 2025-05-15
 
+## Descripción General
 
-# MiniDrive API – Proyecto en PHP Puro
-
-Este proyecto es una **API básica en PHP puro** que simula el funcionamiento de un mini sistema de almacenamiento tipo "drive", como Google Drive o Dropbox, pero de manera sencilla y controlada.
-
-Está diseñado para aprender y demostrar cómo construir una API RESTful sin el uso de frameworks como Laravel o Symfony, apoyándose únicamente en las funcionalidades nativas de PHP y herramientas estándar como Composer.
+En esta rama se realizaron las siguientes configuraciones y funcionalidades como parte del desarrollo de la aplicación:
 
 ---
 
-## 🧱 Estructura del Proyecto
+## 🔧 Configuración de la conexión a la base de datos
 
-La estructura base del proyecto está organizada para mantener el código limpio y modular:
+- Se estableció la conexión entre el backend en PHP y una base de datos MySQL que corre dentro de un contenedor Docker.
+- Se utilizó un archivo `.env` para almacenar las variables sensibles como el `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`.
+- Se implementó la clase `Connexion.php` para gestionar esta conexión de manera segura y reutilizable.
 
-```
-minidrive-php/
-├── public/             # Punto de entrada para las peticiones HTTP (index.php)
-├── src/                # Código fuente de la aplicación (controladores, servicios, etc.)
-├── routes/             # Definición de rutas de la API
-├── vendor/             # Librerías instaladas con Composer
-├── composer.json       # Archivo de configuración de Composer
-└── README.md           # Este documento
-```
+### Archivos modificados / creados:
+- `index.php` (para cargar las variables del entorno)
+- `src/core/Connexion.php`
+- `.env`
+- `.env.example`
 
 ---
 
-## 🚦 Enrutador Personalizado
+## 🧾 Funcionalidad: Registro de usuario
 
-Se implementó un **sistema de enrutamiento manual en PHP puro**, sin utilizar frameworks externos. Este enrutador intercepta todas las peticiones entrantes y las redirige a las rutas correspondientes de la API, haciendo uso de los parámetros de la URL.
+- Se creó un flujo completo para registrar un nuevo usuario utilizando datos provenientes de un formulario.
+- Se validaron los datos mediante un DTO (`RegisterRequestDto.php`).
+- Se implementó la lógica de almacenamiento en la base de datos a través del modelo `User.php`.
+- Se estructuró el servicio `AuthService.php` para centralizar la lógica de autenticación y registro.
+- El controlador `AuthController.php` maneja la petición y delega al servicio correspondiente.
 
-El archivo `index.php`  sirve como punto de entrada para todas las peticiones, y el sistema de rutas es capaz de procesar cualquier URL que coincida con las definiciones, facilitando la expansión de nuevas funcionalidades sin perder la simplicidad del código.
-
----
-
-## ⚙️ Autoloading con Composer
-
-Para mejorar la gestión de dependencias y la carga automática de clases, se utilizó **Composer con su función de autoload**. Esto permitió organizar el código de manera más eficiente, de forma que cada clase se cargue automáticamente sin necesidad de incluir manualmente los archivos con `require`.
-
-El autoloading es configurado en el archivo `composer.json` con el siguiente bloque:
-
-```json
-"autoload": {
-    "psr-4": {
-        "App\": "src/"
-    }
-}
-```
-
-Esto permite una estructura de clases y nombres de espacios que hace que el código sea más limpio y escalable.
+### Archivos creados / modificados:
+- `src/app/controllers/AuthController.php`
+- `src/services/AuthService.php`
+- `src/models/User.php`
+- `src/dtos/RegisterRequestDto.php`
+- `src/views/auth/login.php`
 
 ---
 
-## 📝 Rutas Definidas
+## 🛠️ Notas adicionales
 
-En la rama de este proyecto se configuraron y definieron las siguientes rutas para simular el funcionamiento básico de un servicio de almacenamiento:
-
-
----
-
-## 📦 Dependencias
-
-Este proyecto depende de las siguientes librerías que fueron instaladas mediante Composer:
-
-- **aws/aws-sdk-php**: Para la interacción con el servicio de almacenamiento S3 de AWS, en caso de necesitar manejar archivos de manera persistente en la nube.
-
-Puedes instalar las dependencias ejecutando el siguiente comando:
-
-```
-composer install
-```
-
-Esto levantará el servidor en `http://localhost:8000`, donde podrás probar las rutas de la API.
+- Se utilizó PHP dotenv para proteger la configuración sensible y cargar automáticamente las variables de entorno desde el archivo `.env`.
+- Se actualizó `.gitignore` para asegurarse de que archivos sensibles como `.env` no sean rastreados por Git.
+- Se corrigió un error en la carga del archivo `.env` causado por el orden incorrecto en `index.php`.
 
 ---
 
-## 📄 Conclusión
+## ✅ Resultado esperado
 
-Este proyecto busca demostrar cómo construir una API RESTful simple en PHP puro, utilizando Composer para la gestión de dependencias y el autoloading de clases. Con esta base, se puede expandir el proyecto para manejar más funcionalidades o incluso integrar almacenamiento en la nube como AWS S3 para la gestión de archivos reales.
+Al finalizar estos cambios, la aplicación puede conectarse correctamente a la base de datos alojada en un contenedor Docker y permite registrar usuarios desde el frontend o una herramienta de pruebas como Postman.
