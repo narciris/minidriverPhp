@@ -2,19 +2,17 @@
 
 namespace Nar\MinidriverPhp\services;
 
+use Nar\MinidriverPhp\dtos\FileRequestDto;
 use Nar\MinidriverPhp\models\FileS3;
-use Nar\MinidriverPhp\models\S3Model;
 
-class AwsService
+class FilesService
 {
 
     private $model;
-    private $filesModel;
 
     public function __construct()
     {
-        $this->model = new S3Model();
-        $this->filesModel = new FileS3();
+        $this->model = new FileS3();
 
 
     }
@@ -46,8 +44,17 @@ class AwsService
         $user = $_SESSION['user'];
         $userId = $user['id'];
 
-//        $key = $userId . '/' . basename($file['name']);
-        $this->model->uploadFile($file);
+      $result =  $this->model->uploadFile($file);
+        $dto = new FileRequestDto();
+        $dto->setName($file['name']);
+        $dto->setType($file['type']);
+        $dto->setPath($result['ObjectURL']);
+        $dto->setStorageType('s3');
+        $dto->setUserId($userId);
+
+
+        $this->model->save($dto);
+        return $result;
 
     }
 

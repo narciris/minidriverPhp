@@ -83,8 +83,11 @@ class Model
             }
             $stmt->execute();
 
-            return $this->db->lastInsertId();
-
+            $lastInsertId = $this->db->lastInsertId();
+            if (!$lastInsertId || $lastInsertId <= 0) {
+                throw new \Exception("No se pudo obtener un ID válido después de la inserción.");
+            }
+            return $lastInsertId;
 
         } catch (PDOException $e) {
 //            var_dump($e->getMessage());

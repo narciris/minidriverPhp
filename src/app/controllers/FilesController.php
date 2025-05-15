@@ -5,7 +5,7 @@ namespace Nar\MinidriverPhp\app\controllers;
 use Nar\MinidriverPhp\core\BaseController;
 use Nar\MinidriverPhp\services\FilesService;
 
-class AwsController extends  BaseController
+class FilesController extends  BaseController
 {
 
     private $service;
