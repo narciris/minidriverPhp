@@ -3,6 +3,7 @@
 namespace Nar\MinidriverPhp\models;
 
 use Aws\S3\S3Client;
+use config\awsConf;
 use Nar\MinidriverPhp\core\Model;
 
 class FileS3 extends Model
@@ -17,12 +18,15 @@ class FileS3 extends Model
 
     {
         parent::__construct();
-        $config =  require_once __DIR__ . '/../../config/awsConf.php';
-        $this->bucket = $config['bucket'];
+        $config =  new awsConf();
+       $keys=  $config->getKeys();
+
+        $this->bucket = $keys['bucket'];
+
         $this->s3 = new S3Client([
-            'region' => $config['region'],
-            'version' => $config['version'],
-            'credentials' => $config['credentials']
+            'region' => $keys['region'],
+            'version' => $keys['version'],
+            'credentials' => $keys['credentials']
 
         ]);
     }
@@ -35,7 +39,6 @@ class FileS3 extends Model
             'Bucket' => $this->bucket,
             'Key' => $key,
             'SourceFile' => $filePath['tmp_name'],
-            'ACL' => 'public-read'
         ]);
 
         return [

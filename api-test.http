@@ -21,3 +21,15 @@ Content-Type: application/json
 POST http://localhost:8000/auth/oauth
 Accept: application/json
 Content-Type: application/json
+
+### subir archivos
+
+POST http://localhost:8000/files/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="examen.png"
+Content-Type: image/png
+
+< ./uploads/examen.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
