@@ -2,12 +2,21 @@
 
 namespace config;
 
-return [
-    'credentials' => [
-        'key'    => 'TU_ACCESS_KEY_ID',
-        'secret' => 'TU_SECRET_ACCESS_KEY',
-    ],
-    'region' => 'us-east-1',
-    'version' => 'latest',
-    'bucket' => 'name-bucket'
-];
+class awsConf
+{
+
+    public function getKeys()
+    {
+        return [
+            'credentials' => [
+                'key'    => getenv('AWS_ACCESS_KEY_ID') ?? '',
+                'secret' => $_ENV['AWS_SECRET_ACCESS'] ?? '',
+            ],
+            'region' =>getenv('AWS_REGION') ?? 'us-east-1',
+            'version' => 'latest',
+            'bucket' => getenv('AWS_BUCKET') ?? ''
+        ];
+
+    }
+
+}
