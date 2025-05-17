@@ -98,7 +98,7 @@ class Model
     {
 
         if (empty($id)) {
-            throw new Exception("el id no puede estar vacio");
+            throw new \Exception("el id no puede estar vacio");
         }
         $sql = "DELETE FROM {$this->model} WHERE id = :id";
         $stmt = $this->db->prepare($sql);

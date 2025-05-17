@@ -33,3 +33,18 @@ Content-Type: image/png
 
 < ./uploads/examen.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### subir archivos local
+
+POST http://localhost:8000/files/uploadLocal
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="captura.jpg"
+Content-Type: image/jpeg
+
+< ./uploads/captura.png
+--WebAppBoundary--
+### prueba
+
+

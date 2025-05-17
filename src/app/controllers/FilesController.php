@@ -32,4 +32,28 @@ class FilesController extends  BaseController
         }
     }
 
+    public function uploadLocal()
+    {
+        try {
+            $baseDirectory = 'uploads';
+            $filePath = $this->service->uploadLocal($baseDirectory);
+            $this->jsonSuccess($filePath,200);
+        } catch (\Exception $e) {
+            $this->jsonError($e->getMessage());
+        }
+
+    }
+
+    public function delete(
+        string $file,
+        int $id)
+    {
+        try {
+            $file = $this->service->deleteFile($file, $id);
+            $this->jsonSuccess($file,200);
+        } catch (\Exception $e) {
+            $this->jsonError($e->getMessage());
+        }
+    }
+
 }

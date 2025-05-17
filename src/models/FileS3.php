@@ -55,6 +55,7 @@ class FileS3 extends Model
             'key' =>$key,
             'saveAs' => $savePath
         ]);
+        return $result;
     }
 
     public function deleteFile($key)
